@@ -4,9 +4,10 @@ function SimpleApp(service){
   this.service = service
 
   this.echo = () => {
-    var greet = this.service
-
-    return `Hello world!`
+                // function jest.fn()
+    var greet = this.service()
+    return "Hello world!"
+    //return `Hello ${greet}!`
   }
 }
 
@@ -15,10 +16,13 @@ function SimpleApp(service){
 test('Simple Mock',() => {
   // call library
   const mockFn = jest.fn()
+        
 
   var app = new SimpleApp(mockFn)
 
   var result = app.echo()
 
+  // check mockFn be used
+  expect(mockFn).toHaveBeenCalled()
   expect(result).toBe('Hello world!')
 })
