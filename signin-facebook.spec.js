@@ -6,8 +6,8 @@ function SimpleApp(service){
   this.echo = () => {
                 // function jest.fn()
     var greet = this.service()
-    return "Hello world!"
-    //return `Hello ${greet}!`
+    //return "Hello world!"
+    return `Hello ${greet}!`
   }
 }
 
@@ -16,7 +16,7 @@ function SimpleApp(service){
 test('Simple Mock',() => {
   // call library
   const mockFn = jest.fn()
-        
+      .mockReturnValue('world')
 
   var app = new SimpleApp(mockFn)
 
