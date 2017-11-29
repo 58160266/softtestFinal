@@ -3,11 +3,11 @@ function SimpleApp(service){
   //save service value for know value return in mock service
   this.service = service
 
-  this.echo = () => {
+  this.echo = (nickname) => {
                 // function jest.fn()
-    var greet = this.service()
+    var firstname = this.service(nickname)
     //return "Hello world!"
-    return `Hello ${greet}!`
+    return `Hello ${firstname}!`
   }
 }
 
@@ -16,13 +16,16 @@ function SimpleApp(service){
 test('Simple Mock',() => {
   // call library
   const mockFn = jest.fn()
-      .mockReturnValue('world')
+      .mockReturnValue('panumat')
 
   var app = new SimpleApp(mockFn)
-
-  var result = app.echo()
+  var nickname = 'yo'
+  //สมมุติเราลองส่งชื่อไป
+  var result = app.echo(nickname)
 
   // check mockFn be used
   expect(mockFn).toHaveBeenCalled()
-  expect(result).toBe('Hello world!')
+  expect(mockFn).toHaveBeenCalledWith(nickname)
+  expect(result).toBe('Hello panumat!')
+  //expect(result).toEqual('Hello panumat!')
 })
