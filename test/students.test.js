@@ -1,5 +1,5 @@
 const test = require('tape')
-const server = require('../server')
+const app = require('../server')
 const request = require('supertest') // ออกแบบมาเพื่อ test express โดยเฉพาะ
 
 test('First test case',(t)=> {
@@ -19,7 +19,15 @@ test('GET /students',(t) =>{
     //ในทุกครั้งจะมี http status บอก ถ้าทำงานผ่าน http protocal
     //  $ curl -I http://localhost:3001/students ลองใน git bash จะมีบอก status
     .expect(200) // success
-    .end() //close connection ไม่งั้นมันจะเปิดทิ้งไว้
+    .then((res) =>{ // จบการ test
+      let students = res.body // ส่งค่ากลับมาเป็นlist
+      t.equal(2,students.length)
+      let student = students[0]
+      //ตรวจสอบเชิงโครงสร้าง
+      t.notEqual(undefined, student.id) // มีค่า property id หรือป่าว //ถ้ามันมีค่าจริงๆมันจะไม่ undefined
+      t.end() //close connection ไม่งั้นมันจะเปิดทิ้งไว้
+    })
+
 
 })
 
